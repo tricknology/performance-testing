@@ -1,0 +1,90 @@
+apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
+
+android {
+    compileSdkVersion 28
+
+    defaultConfig {
+        applicationId "com.appetize.performance.leaks"
+        minSdkVersion 23
+        targetSdkVersion 28
+        versionCode 1
+        versionName "1.0"
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+//      testInstrumentationRunnerArguments listener: "com.appetize.performance.leaks.sixthtest.PerfRunListener"
+//      testInstrumentationRunnerArgument "listener", "com.squareup.leakcanary.FailTestOnLeakRunListener"
+//      testInstrumentationRunnerArgument "listener", "com.appetize.performance.leaks.eighthTest.MyLeakRunListener"
+        testInstrumentationRunnerArgument "listener", "com.appetize.performance.leaks.ninthTest.MyOtherLeakRunListener"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    android {
+        compileOptions {
+            sourceCompatibility JavaVersion.VERSION_1_8
+            targetCompatibility JavaVersion.VERSION_1_8
+        }
+    }
+
+    useLibrary 'android.test.base'
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+
+    implementation 'androidx.appcompat:appcompat:1.0.2'
+    implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
+    implementation 'androidx.recyclerview:recyclerview:1.0.0'
+    implementation 'androidx.core:core-ktx:1.0.2'
+
+    testImplementation 'junit:junit:4.12'
+
+
+    //RX
+    def rxandroid2_version = '2.1.1'
+    def rxjava2_version = '2.2.9'
+    def rxjava2kotlin_version = '2.1.0'
+    def rxandroid2_bindings_version = '2.2.0'
+
+    implementation"io.reactivex.rxjava2:rxjava:${rxjava2_version}"
+    implementation"io.reactivex.rxjava2:rxandroid:${rxandroid2_version}"
+    implementation"io.reactivex.rxjava2:rxkotlin:${rxjava2kotlin_version}"
+    implementation "com.jakewharton.rxbinding2:rxbinding:${rxandroid2_bindings_version}"
+
+    // Core library
+    androidTestImplementation 'androidx.test:core:1.1.0'
+
+    def androidx_fragments_version = "1.2.0"
+    debugImplementation "androidx.fragment:fragment-testing:${androidx_fragments_version}"
+
+    // AndroidJUnitRunner and JUnit Rules
+    androidTestImplementation 'androidx.test:runner:1.1.1'
+    androidTestImplementation 'androidx.test:rules:1.1.1'
+
+    // Assertions
+    androidTestImplementation 'androidx.test.ext:junit:1.1.0'
+    androidTestImplementation 'androidx.test.ext:truth:1.1.0'
+    androidTestImplementation 'com.google.truth:truth:0.42'
+
+    // Espresso dependencies
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.1'
+    androidTestImplementation 'androidx.test.espresso:espresso-contrib:3.1.1'
+    androidTestImplementation 'androidx.test.espresso:espresso-intents:3.1.1'
+    androidTestImplementation 'androidx.test.espresso:espresso-accessibility:3.1.1'
+    androidTestImplementation 'androidx.test.espresso:espresso-web:3.1.1'
+    androidTestImplementation 'androidx.test.espresso.idling:idling-concurrent:3.1.1'
+    androidTestImplementation 'androidx.test.janktesthelper:janktesthelper:1.0.1'
+    androidTestImplementation 'androidx.test.uiautomator:uiautomator:2.2.0'
+
+    // LeakCanary
+    debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.0-alpha-1'
+    androidTestImplementation "com.squareup.leakcanary:leakcanary-android-instrumentation:2.0-alpha-1"
+
+}
